@@ -4,6 +4,12 @@ public class Coffre {
 
     private int nbTresor;
 
+
+    //coffre nul
+    public Coffre(){
+        nbTresor = 0;
+    }
+
     public Coffre(int i){
         Random rand = new Random();
         if(i == 1){
@@ -18,4 +24,12 @@ public class Coffre {
             nbTresor = rand.nextInt(3)+10;
         }
     }
+
+
+    //méthodes
+
+    public void coffreOuvert(){
+        nbTresor = 0;
+    }
+
 }

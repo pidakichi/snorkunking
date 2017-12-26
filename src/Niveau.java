@@ -16,4 +16,17 @@ public class Niveau {
         }
     }
 
+
+    //méthodes
+
+    //retirer les coffres vides a la fin de la phase
+    public void finPhase(){
+        Coffre coffreNul = new Coffre();
+        for (int i = 0 ; i < tabCoffre.size() ; i++){
+            if(tabCoffre.get(i).equals(coffreNul)){
+                tabCoffre.remove(tabCoffre.get(i));
+            }
+        }
+    }
+
 }
