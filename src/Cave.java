@@ -24,5 +24,11 @@ public class Cave {
         }
     }
 
+    //on supprime les niveaux où les coffres sont vides
+    public void finPhaseSuppNiveau(){
+        for (int i = 0 ; i < tabNiveau.size() ; i++){
+
+        }
+    }
 
 }

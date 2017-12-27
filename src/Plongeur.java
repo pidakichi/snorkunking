@@ -26,4 +26,9 @@ public class Plongeur {
         poids = poids + 1;
     }
 
+    //retourner le nb de tresor qu'il a pour les faire tomber
+    public int finPhase(){
+        return poids;
+    }
+
 }
