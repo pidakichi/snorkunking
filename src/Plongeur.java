@@ -15,11 +15,11 @@ public class Plongeur {
 
 
     public void monter(){
-        positionY = positionY + 1;
+        positionY = positionY + 20;
     }
 
     public void descendre(){
-        positionY = positionY - 1;
+        positionY = positionY - 20;
     }
 
     public void prendre(){
@@ -30,5 +30,10 @@ public class Plongeur {
     public int finPhase(){
         return poids;
     }
+
+    public int retourPositionY(){
+        return positionY;
+    }
+
 
 }
