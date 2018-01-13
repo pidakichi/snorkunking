@@ -1,10 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
+import java.io.IOException;
 
 
 public class ContenuFenetre extends JPanel{
-
 
 
     Plongeur plongeur1 = new Plongeur(100);
@@ -32,6 +32,21 @@ public class ContenuFenetre extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
+        Image bg = null;
+        Image imgCoffrePlein = null;
+        Image imgPlongeur1 = null;
+        Image imgPlongeur2 = null;
+        try {
+            bg = ImageIO.read(getClass().getResource("Drawables/bg2.jpg"));
+            imgCoffrePlein = ImageIO.read(getClass().getResource("Drawables/coffre-plein.png"));
+            imgPlongeur1 = ImageIO.read(getClass().getResource("Drawables/plongeur1.png"));
+            imgPlongeur2 =  ImageIO.read(getClass().getResource("Drawables/plongeur2.png"));
+        } catch (IOException e) {
+            e.printStackTrace(); //identifie la méthode où il y a un problème
+        }
+
+
+        g.drawImage(bg,0,0,null);
 
         //dessin des niveaux et des coffres
         //cave 1
@@ -40,7 +55,8 @@ public class ContenuFenetre extends JPanel{
             g.fillRect(340, 80+30*i, 600,20);
             for(int j = 0 ; j < cave1.tabNiveau.get(i).retourNbCoffre() ; j++){
                 g.setColor(Color.orange);
-                g.fillRect(200-j*20, 80+30*i, 20,20);
+                //g.fillRect(200-j*20, 80+30*i, 20,20);
+                g.drawImage(imgCoffrePlein,200-j*20,80+30*i, null);
                 g.drawString(String.valueOf(cave1.tabNiveau.get(i).tabCoffre.get(0).retourNbTresor()),260,80+30*i);
             }
 
@@ -52,7 +68,8 @@ public class ContenuFenetre extends JPanel{
             g.fillRect(340,80+30*i+30*cave1.retourNbNiveau(),600,20);
             for(int j = 0 ; j < cave2.tabNiveau.get(i).retourNbCoffre() ; j++){
                 g.setColor(Color.orange);
-                g.fillRect(200-j*20, 80+30*i+30*cave1.retourNbNiveau(), 20, 20);
+                //g.fillRect(200-j*20, 80+30*i+30*cave1.retourNbNiveau(), 20, 20);
+                g.drawImage(imgCoffrePlein, 200-j*20, 80+30*i+30*cave1.retourNbNiveau(), null);
                 g.drawString(String.valueOf(cave2.tabNiveau.get(i).tabCoffre.get(0).retourNbTresor()),260,80+30*i+30*cave1.retourNbNiveau());
             }
         }
@@ -63,7 +80,8 @@ public class ContenuFenetre extends JPanel{
             g.fillRect(340, 80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau(), 600, 20);
             for(int j = 0 ; j < cave3.tabNiveau.get(i).retourNbCoffre() ; j++){
                 g.setColor(Color.orange);
-                g.fillRect(200-j*30, 80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau(), 20,20);
+                //g.fillRect(200-j*30, 80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau(), 20,20);
+                g.drawImage(imgCoffrePlein, 200-j*30, 80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau(), null );
                 g.drawString(String.valueOf(cave3.tabNiveau.get(i).tabCoffre.get(0).retourNbTresor()),260,80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau());
             }
         }
@@ -74,10 +92,13 @@ public class ContenuFenetre extends JPanel{
 
         //dessin des plongeurs
         g.setColor(Color.red);
-        g.fillOval(500, 50+30*plongeur1.retourPositionY(), 10,10);
+
+        g.drawImage(imgPlongeur1, 500, 40+30*plongeur1.retourPositionY(), null);
+
 
         g.setColor(Color.black);
-        g.fillOval(800, 50+30*plongeur2.retourPositionY(),10,10);
+
+        g.drawImage(imgPlongeur2, 800, 40+30*plongeur2.retourPositionY(), null);
 
         if(dessinTour == 1){
             g.drawOval(500,50+30*plongeur1.retourPositionY(), 20,20);

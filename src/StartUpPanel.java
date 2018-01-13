@@ -32,6 +32,8 @@ public class StartUpPanel extends JPanel implements MouseListener {
 
     private static JFrame mainFrame;
 
+    public int nbJoueur = 0;
+
     // constructeur
     
     public StartUpPanel(JFrame mainFrame) {
@@ -88,14 +90,12 @@ public class StartUpPanel extends JPanel implements MouseListener {
         }else if(e.getComponent().getName().equals("play")){
             if(isCliked[0]){
                 mainFrame.dispose();  //destruction de la fenetre
-                Fenetre fenetrePrincipale = new Fenetre(1);          //Appel de la fenetre normale du jeu = remplacement main
-                fenetrePrincipale.setVisible(true);
-                fenetrePrincipale.jeu();
+                nbJoueur = 1;
+
+
             }else if(isCliked[1]){
                 mainFrame.dispose();
-                Fenetre fenetrePrincipale = new Fenetre(2);
-                fenetrePrincipale.setVisible(true);
-                fenetrePrincipale.jeu();
+                nbJoueur = 2;
            
             }
         }else{

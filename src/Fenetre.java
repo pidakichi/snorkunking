@@ -9,6 +9,7 @@ public class Fenetre extends JFrame {
 
 
 	//private static final long serialVersionUID = 1L; //ajouté automatiquement pour enlever une erreur
+
 	private ContenuFenetre contenuFenetre = new ContenuFenetre();
     Plongeur plongeur1 = contenuFenetre.plongeur1;
     Plongeur plongeur2 = contenuFenetre.plongeur2;
@@ -21,9 +22,10 @@ public class Fenetre extends JFrame {
 
 	int interrupteur = 0;
 
+
 	public Fenetre() {
 		this.setTitle("Snorkunking");
-		this.setSize(1200,1200);
+		this.setSize(1200,1000);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -152,6 +154,7 @@ public class Fenetre extends JFrame {
 	}
 
     public void jeu(){
+    	contenuFenetre.repaint();
         aquiletour();
         for (int i = 0; i < 3 ; i++){
 
@@ -202,8 +205,7 @@ public class Fenetre extends JFrame {
 			contenuFenetre.repaint();
         }
 
-		plongeur1.remiseAZero();
-		plongeur2.remiseAZero();
+		this.dispose();
 
     }
 }
