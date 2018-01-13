@@ -1,13 +1,15 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import  java.util.Random;
 
 public class Cave {
 
     private int nbNiveau;
-    private ArrayList<Niveau> tabNiveau;
+    public ArrayList<Niveau> tabNiveau;
 
     public Cave (int i){
         Random rand = new Random();
+        tabNiveau = new ArrayList<Niveau>();
         if(i == 1){
             nbNiveau = rand.nextInt(4)+9;//nous donne une valeur entre 9 et 12
         }
@@ -24,11 +26,17 @@ public class Cave {
         }
     }
 
-    //on supprime les niveaux où les coffres sont vides
-    public void finPhaseSuppNiveau(){
-        for (int i = 0 ; i < tabNiveau.size() ; i++){
-
-        }
+    public int retourNbNiveau(){
+        return tabNiveau.size();
     }
 
+    public void caveFinPhase(){
+        ArrayList<Niveau> copy = new ArrayList<>();
+        for(int i = 0 ; i < tabNiveau.size() ; i++){
+            if(tabNiveau.get(i).tabCoffre.size() != 0){
+                copy.add(tabNiveau.get(i));
+            }
+        }
+        this.tabNiveau = copy;
+    }
 }

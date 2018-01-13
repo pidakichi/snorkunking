@@ -28,8 +28,9 @@ public class Coffre {
 
     //méthodes
 
-    public void coffreOuvert(){
-        nbTresor = 0;
+    public int retourNbTresor(){
+        return nbTresor;
     }
+
 
 }

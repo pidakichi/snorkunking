@@ -1,13 +1,22 @@
 public class Plongeur {
 
-    public int positionX, positionY, poids, score;
+    private int positionX, positionY, poids, score;
+    //mettre la position Y en "case" plutot qu'en pixel plus facile pour gerer la position
+
 
     //faut peut etre changer positionY en valeur par defaut lors de la construction
-    public Plongeur(int _positionX, int _positionY, int _poids, int _score){
+    public Plongeur(int _positionX){
         positionX = _positionX;
-        positionY = _positionY;
-        poids = _poids;
-        score = _score;
+        positionY = 0;
+        poids = 1;
+        score = 0;
+    }
+
+    public Plongeur(){
+        positionX = 0;
+        positionY = 0;
+        poids = 0;
+        score = 0;
     }
 
 
@@ -15,24 +24,37 @@ public class Plongeur {
 
 
     public void monter(){
-        positionY = positionY + 20;
+        positionY = positionY - 1;
     }
 
     public void descendre(){
-        positionY = positionY - 20;
+        positionY = positionY + 1;
     }
 
-    public void prendre(){
-        poids = poids + 1;
-    }
+    public void prendre(int i){//i = nb de tresor dans le coffres
+        poids = poids + i;
+    }//prendre un entier et faire plus un entier
 
-    //retourner le nb de tresor qu'il a pour les faire tomber
-    public int finPhase(){
+
+    public int retourPoids(){
         return poids;
     }
 
     public int retourPositionY(){
         return positionY;
+    }
+
+    public int retourScore(){
+        return score;
+    }
+
+    public void setScore(){
+        score = score + poids - 1;
+    }
+
+    public void remiseAZero(){
+        positionY = 0;
+        poids = 1;
     }
 
 
