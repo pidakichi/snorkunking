@@ -1,7 +1,9 @@
 
 import javax.swing.*;
-
+import sun.audio.*;
 import java.awt.*;
+import java.io.InputStream;
+
 
 public class StartUpFenetre extends JFrame {
 
@@ -14,6 +16,14 @@ public class StartUpFenetre extends JFrame {
         this.setLocationRelativeTo(null);
         this.setContentPane(p1);
         this.setVisible(true);
+    }
+
+    public void son(){
+        try{
+            InputStream in = getClass().getResourceAsStream("Sounds/splash.wav");
+            AudioStream au = new AudioStream(in);
+            AudioPlayer.player.start(au);
+        }catch(Exception e){}
     }
 
     public int retourNbJoueur(){

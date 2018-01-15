@@ -1,11 +1,15 @@
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
-import  java.util.Random;
+import java.util.Random;
 
 public class Cave {
 
     private int nbNiveau;
-    public ArrayList<Niveau> tabNiveau;
+    private ArrayList<Niveau> tabNiveau;
+
+    public Cave(){
+        nbNiveau = 0;
+    }
 
     public Cave (int i){
         Random rand = new Random();
@@ -30,10 +34,14 @@ public class Cave {
         return tabNiveau.size();
     }
 
+    public Niveau retourNiveau(int i){
+        return tabNiveau.get(i);
+    }
+
     public void caveFinPhase(){
         ArrayList<Niveau> copy = new ArrayList<>();
         for(int i = 0 ; i < tabNiveau.size() ; i++){
-            if(tabNiveau.get(i).tabCoffre.size() != 0){
+            if(tabNiveau.get(i).tailleTabCoffre() != 0){
                 copy.add(tabNiveau.get(i));
             }
         }

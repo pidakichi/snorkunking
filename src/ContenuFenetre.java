@@ -53,11 +53,11 @@ public class ContenuFenetre extends JPanel{
         for(int i = 0 ; i < cave1.retourNbNiveau() ; i++){
             g.setColor(Color.lightGray);
             g.fillRect(340, 80+30*i, 600,20);
-            for(int j = 0 ; j < cave1.tabNiveau.get(i).retourNbCoffre() ; j++){
+            for(int j = 0 ; j < cave1.retourNiveau(i).retourNbCoffre() ; j++){
                 g.setColor(Color.orange);
                 //g.fillRect(200-j*20, 80+30*i, 20,20);
                 g.drawImage(imgCoffrePlein,200-j*20,80+30*i, null);
-                g.drawString(String.valueOf(cave1.tabNiveau.get(i).tabCoffre.get(0).retourNbTresor()),260,80+30*i);
+                g.drawString(String.valueOf(cave1.retourNiveau(i).retourCoffre(0).retourNbTresor()),260,80+30*i);
             }
 
         }
@@ -66,11 +66,11 @@ public class ContenuFenetre extends JPanel{
         for(int i = 0 ; i < cave2.retourNbNiveau() ; i++){
             g.setColor(Color.cyan);
             g.fillRect(340,80+30*i+30*cave1.retourNbNiveau(),600,20);
-            for(int j = 0 ; j < cave2.tabNiveau.get(i).retourNbCoffre() ; j++){
+            for(int j = 0 ; j < cave2.retourNiveau(i).retourNbCoffre() ; j++){
                 g.setColor(Color.orange);
                 //g.fillRect(200-j*20, 80+30*i+30*cave1.retourNbNiveau(), 20, 20);
                 g.drawImage(imgCoffrePlein, 200-j*20, 80+30*i+30*cave1.retourNbNiveau(), null);
-                g.drawString(String.valueOf(cave2.tabNiveau.get(i).tabCoffre.get(0).retourNbTresor()),260,80+30*i+30*cave1.retourNbNiveau());
+                g.drawString(String.valueOf(cave2.retourNiveau(i).retourCoffre(0).retourNbTresor()),260,80+30*i+30*cave1.retourNbNiveau());
             }
         }
 
@@ -78,11 +78,11 @@ public class ContenuFenetre extends JPanel{
         for (int i = 0 ; i < cave3.retourNbNiveau() ; i++){
             g.setColor(Color.blue);
             g.fillRect(340, 80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau(), 600, 20);
-            for(int j = 0 ; j < cave3.tabNiveau.get(i).retourNbCoffre() ; j++){
+            for(int j = 0 ; j < cave3.retourNiveau(i).retourNbCoffre() ; j++){
                 g.setColor(Color.orange);
                 //g.fillRect(200-j*30, 80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau(), 20,20);
                 g.drawImage(imgCoffrePlein, 200-j*30, 80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau(), null );
-                g.drawString(String.valueOf(cave3.tabNiveau.get(i).tabCoffre.get(0).retourNbTresor()),260,80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau());
+                g.drawString(String.valueOf(cave3.retourNiveau(i).retourCoffre(0).retourNbTresor()),260,80+30*i+30*cave1.retourNbNiveau()+30*cave2.retourNbNiveau());
             }
         }
 

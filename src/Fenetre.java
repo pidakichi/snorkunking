@@ -2,8 +2,9 @@
 import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.Random;
+import sun.audio.*;
 
 public class Fenetre extends JFrame {
 
@@ -42,7 +43,6 @@ public class Fenetre extends JFrame {
 		public void keyTyped(KeyEvent e) {
 			if (order[interrupteur] == 1){
 			    tourjoueur(plongeur1, e);
-
             }
             else if (order[interrupteur] == 2){
 			    tourjoueur(plongeur2, e);
@@ -100,50 +100,49 @@ public class Fenetre extends JFrame {
         	//mettre condition monter
             plongeur.monter();
 			contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
-
+			sonMouvement();
 
         }
         else if (e.getKeyChar() == 'q' && plongeur.retourPositionY() != contenuFenetre.nbNiveau){
             plongeur.descendre();
 			contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
-
+			sonMouvement();
 
         }
         else if (e.getKeyChar() == 'w' ){
 			//plongeur dans la cave 1
 			if(plongeur.retourPositionY()<cave1.retourNbNiveau()+1) {
 				//ajout du poids du coffre
-				plongeur.prendre(cave1.tabNiveau.get(plongeur.retourPositionY() - 1).tabCoffre.get(0).retourNbTresor());
+				plongeur.prendre(cave1.retourNiveau(plongeur.retourPositionY() - 1).retourCoffre(0).retourNbTresor());
 
 				contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
 
 				//suppression du coffre
-				cave1.tabNiveau.get(plongeur.retourPositionY() - 1).suppCoffre(0);
+				cave1.retourNiveau(plongeur.retourPositionY() - 1).suppCoffre(0);
 
 			}
 
 			//plongeur dans cave 3
 			else if(plongeur.retourPositionY()> cave1.retourNbNiveau()+cave2.retourNbNiveau()-1){
 				//ajout du poids du coffre
-				plongeur.prendre(cave3.tabNiveau.get(plongeur.retourPositionY()-cave1.retourNbNiveau()-cave2.retourNbNiveau()-1).tabCoffre.get(0).retourNbTresor());
+				plongeur.prendre(cave3.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-cave2.retourNbNiveau()-1).retourCoffre(0).retourNbTresor());
 
 				contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
 
 				//suppression du coffre
-				cave3.tabNiveau.get(plongeur.retourPositionY()-cave1.retourNbNiveau()-cave2.retourNbNiveau()-1).suppCoffre(0);
+				cave3.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-cave2.retourNbNiveau()-1).suppCoffre(0);
 			}
 
 			else{
 				//ajout du poids du coffre
-				plongeur.prendre(cave2.tabNiveau.get(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).tabCoffre.get(0).retourNbTresor());
+				plongeur.prendre(cave2.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).retourCoffre(0).retourNbTresor());
 
 				contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
 
 				//suppression du coffre
-				cave2.tabNiveau.get(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).suppCoffre(0);
+				cave2.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).suppCoffre(0);
 			}
-
-
+			sonChest();
         }
 
         else{interrupteur--;}
@@ -184,10 +183,10 @@ public class Fenetre extends JFrame {
             //faire tomber les coffres
 
 			if(plongeur1.retourPoids() != 1) {
-				cave3.tabNiveau.get(cave3.retourNbNiveau()-1).tabCoffre.add(new Coffre(plongeur1.retourPoids()));
+				cave3.retourNiveau(cave3.retourNbNiveau()-1).addCoffre(plongeur1.retourPoids());
 			}
 			if(plongeur2.retourPoids() != 1) {
-				cave3.tabNiveau.get(cave3.retourNbNiveau()-1).tabCoffre.add(new Coffre(plongeur2.retourPoids()));
+				cave3.retourNiveau(cave3.retourNbNiveau()-1).addCoffre(plongeur2.retourPoids());
 			}
 
 			//update de la map des niveaux, on supprime les niveaux où les coffres on été pris
@@ -208,4 +207,20 @@ public class Fenetre extends JFrame {
 		this.dispose();
 
     }
+
+    public void sonMouvement(){
+		try{
+			InputStream in = getClass().getResourceAsStream("Sounds/movement.wav");
+			AudioStream au = new AudioStream(in);
+			AudioPlayer.player.start(au);
+		}catch(Exception e){}
+	}
+
+	public void sonChest(){
+    	try{
+    		InputStream in = getClass().getResourceAsStream("Sounds/open.wav");
+    		AudioStream au = new AudioStream(in);
+    		AudioPlayer.player.start(au);
+		}catch(Exception e){}
+	}
 }

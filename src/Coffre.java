@@ -10,20 +10,23 @@ public class Coffre {
         nbTresor = 0;
     }
 
-    public Coffre(int i){
+    public Coffre(int i, String string){
         Random rand = new Random();
-        if(i == 1){
-            nbTresor = rand.nextInt(3)+1;
+        if(string.equals("finPhase") == false) {
+            if (i == 1) {
+                nbTresor = rand.nextInt(3) + 1;
+            } else if (i == 2) {
+                nbTresor = rand.nextInt(4) + 5;
+            } else {
+                nbTresor = rand.nextInt(3) + 10;
+            }
         }
-
-        else if (i == 2){
-            nbTresor = rand.nextInt(4)+5;
-        }
-
         else{
-            nbTresor = rand.nextInt(3)+10;
+            nbTresor = i;
         }
     }
+
+
 
 
     //méthodes
