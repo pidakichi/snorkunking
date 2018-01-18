@@ -1,6 +1,6 @@
 public class Plongeur {
 
-    protected int positionX, positionY, poids, score;
+    protected int positionX, positionY, poids, score, nbCoffre;
     //mettre la position Y en "case" plutot qu'en pixel plus facile pour gerer la position
 
 
@@ -10,14 +10,9 @@ public class Plongeur {
         positionY = 0;
         poids = 1;
         score = 0;
+        nbCoffre = 0;
     }
 
-    public Plongeur(){
-        positionX = 200;
-        positionY = 0;
-        poids = 1;
-        score = 0;
-    }
 
 
     //méthodes
@@ -33,7 +28,12 @@ public class Plongeur {
 
     public void prendre(int i){//i = nb de tresor dans le coffres
         poids = poids + i;
+        nbCoffre = nbCoffre+1;
     }//prendre un entier et faire plus un entier
+
+    public int retourNbCoffre(){
+        return nbCoffre;
+    }
 
 
     public int retourPoids(){
@@ -55,6 +55,7 @@ public class Plongeur {
     public void remiseAZero(){
         positionY = 0;
         poids = 1;
+        nbCoffre = 0;
     }
 
 
