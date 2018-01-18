@@ -15,7 +15,7 @@ public class StartUpFenetre extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setContentPane(p1);
-        this.setVisible(true);
+        this.setVisible(false);
     }
 
     public void son(){
@@ -26,6 +26,9 @@ public class StartUpFenetre extends JFrame {
         }catch(Exception e){}
     }
 
+    public int modeDeJeu(){
+        return p1.modeDeJeu();
+    }
     public int retourNbJoueur(){
         return p1.nbJoueur;
     }

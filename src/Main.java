@@ -18,12 +18,24 @@ public class Main {
 
         fen.son();
 
-        Fenetre fenetre = new Fenetre();
+        Fenetre fenetre = new Fenetre(fen.modeDeJeu());
         fenetre.setVisible(true);
         fenetre.jeu();
+        fenetre.setVisible(false);
 
+        EndUpFenetre endup = new EndUpFenetre();
+        endup.setVisible(true);
 
-        miseEnMarche();
+        while(endup.retourRejouer() == 0){
+            System.out.println("attente");
+        }
+
+        if(endup.retourRejouer() == 1) {
+            fenetre.dispose();
+            miseEnMarche();
+        }
+        System.out.println("fin");
+
     }
 
 

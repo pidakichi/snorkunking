@@ -171,4 +171,9 @@ public class StartUpPanel extends JPanel implements MouseListener {
         }
         
     }
+
+    public int modeDeJeu(){
+        return nbJoueur;
+    }
+
 }

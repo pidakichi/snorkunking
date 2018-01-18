@@ -11,6 +11,7 @@ public class Fenetre extends JFrame {
 
 	//private static final long serialVersionUID = 1L; //ajouté automatiquement pour enlever une erreur
 
+	private int mode;
 	private ContenuFenetre contenuFenetre = new ContenuFenetre();
     Plongeur plongeur1 = contenuFenetre.plongeur1;
     Plongeur plongeur2 = contenuFenetre.plongeur2;
@@ -24,7 +25,7 @@ public class Fenetre extends JFrame {
 	int interrupteur = 0;
 
 
-	public Fenetre() {
+	public Fenetre(int i) {
 		this.setTitle("Snorkunking");
 		this.setSize(1200,1000);
 		this.setResizable(false);
@@ -33,7 +34,7 @@ public class Fenetre extends JFrame {
 		this.setAlwaysOnTop(true);
 		this.setContentPane(contenuFenetre);
 		this.addKeyListener(new ClavierListener() );
-
+		this.mode = i;
 
 	}
 
@@ -45,7 +46,10 @@ public class Fenetre extends JFrame {
 			    tourjoueur(plongeur1, e);
             }
             else if (order[interrupteur] == 2){
-			    tourjoueur(plongeur2, e);
+				if(mode == 2) {
+					tourjoueur(plongeur2, e);
+				}
+
             }
             interrupteur++;
             if (interrupteur == 2){
@@ -99,13 +103,13 @@ public class Fenetre extends JFrame {
         if (e.getKeyChar() == 'a' && plongeur.retourPositionY() != 0){
         	//mettre condition monter
             plongeur.monter();
-			contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
+			contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
 			sonMouvement();
 
         }
-        else if (e.getKeyChar() == 'q' && plongeur.retourPositionY() != contenuFenetre.nbNiveau){
+        else if (e.getKeyChar() == 'q' && plongeur.retourPositionY() != cave1.retourNbNiveau()+cave2.retourNbNiveau()+cave3.retourNbNiveau()){
             plongeur.descendre();
-			contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
+			contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
 			sonMouvement();
 
         }
@@ -115,7 +119,7 @@ public class Fenetre extends JFrame {
 				//ajout du poids du coffre
 				plongeur.prendre(cave1.retourNiveau(plongeur.retourPositionY() - 1).retourCoffre(0).retourNbTresor());
 
-				contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
+				contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
 
 				//suppression du coffre
 				cave1.retourNiveau(plongeur.retourPositionY() - 1).suppCoffre(0);
@@ -127,7 +131,7 @@ public class Fenetre extends JFrame {
 				//ajout du poids du coffre
 				plongeur.prendre(cave3.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-cave2.retourNbNiveau()-1).retourCoffre(0).retourNbTresor());
 
-				contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
+				contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
 
 				//suppression du coffre
 				cave3.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-cave2.retourNbNiveau()-1).suppCoffre(0);
@@ -137,7 +141,7 @@ public class Fenetre extends JFrame {
 				//ajout du poids du coffre
 				plongeur.prendre(cave2.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).retourCoffre(0).retourNbTresor());
 
-				contenuFenetre.oxygene = contenuFenetre.oxygene - plongeur.retourPoids();
+				contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
 
 				//suppression du coffre
 				cave2.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).suppCoffre(0);
@@ -148,7 +152,112 @@ public class Fenetre extends JFrame {
         else{interrupteur--;}
     }
 
-    public void tourBot(){
+    public void tourBot(Plongeur plongeur){
+    	System.out.println("tourbot");
+    	//plongeur a un tresor
+		if(plongeur.retourPoids() > 1){
+			plongeur.monter();
+			contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
+			interrupteur++;
+			if (interrupteur == 2){
+				aquiletour();
+				interrupteur = 0;
+			}
+		}
+
+		//plongeur n'a pas de tresor
+		else if(plongeur.retourPoids() == 1) {
+
+			if (plongeur.retourPositionY() == 0){
+				plongeur.descendre();
+				contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
+				interrupteur++;
+				if (interrupteur == 2){
+					aquiletour();
+					interrupteur = 0;
+				}
+			}
+
+
+			//plongeur dans cave 1
+			else if (plongeur.retourPositionY() < cave1.retourNbNiveau() + 1) {
+
+
+
+				if (cave1.retourNiveau(plongeur.retourPositionY() - 1).tailleTabCoffre() == 0) {
+					plongeur.descendre();
+					contenuFenetre.oxygene = contenuFenetre.oxygene - 1 -  plongeur.retourNbCoffre();
+					interrupteur++;
+					if (interrupteur == 2){
+						aquiletour();
+						interrupteur = 0;
+					}
+				} else {
+					plongeur.prendre(cave1.retourNiveau(plongeur.retourPositionY() - 1).retourCoffre(0).retourNbTresor());
+					contenuFenetre.oxygene = contenuFenetre.oxygene - 1 -  plongeur.retourNbCoffre();
+					cave1.retourNiveau(plongeur.retourPositionY() - 1).suppCoffre(0);
+					interrupteur++;
+					if (interrupteur == 2){
+						aquiletour();
+						interrupteur = 0;
+					}
+				}
+
+
+			}
+
+			//plongeur dans cave 3
+			else if (plongeur.retourPositionY() > cave1.retourNbNiveau() + cave2.retourNbNiveau() - 1) {
+				if (cave3.retourNiveau(plongeur.retourPositionY() - cave1.retourNbNiveau() - cave2.retourNbNiveau() - 1).tailleTabCoffre() == 0) {
+					plongeur.descendre();
+					contenuFenetre.oxygene = contenuFenetre.oxygene - 1 -  plongeur.retourNbCoffre();
+					interrupteur++;
+					if (interrupteur == 2){
+						aquiletour();
+						interrupteur = 0;
+					}
+				} else {
+					plongeur.prendre(cave3.retourNiveau(plongeur.retourPositionY() - cave1.retourNbNiveau() - cave2.retourNbNiveau() - 1).retourCoffre(0).retourNbTresor());
+					contenuFenetre.oxygene = contenuFenetre.oxygene - 1- plongeur.retourNbCoffre();
+					cave3.retourNiveau(plongeur.retourPositionY() - cave1.retourNbNiveau() - cave2.retourNbNiveau() - 1).suppCoffre(0);
+					interrupteur++;
+					if (interrupteur == 2){
+						aquiletour();
+						interrupteur = 0;
+					}
+				}
+
+
+			} //plongeur dans cave2
+			else {
+				//ajout du poids du coffre
+				plongeur.prendre(cave2.retourNiveau(plongeur.retourPositionY() - cave1.retourNbNiveau() - 1).retourCoffre(0).retourNbTresor());
+				if(cave2.retourNiveau(plongeur.retourPositionY() - cave1.retourNbNiveau() - 1).tailleTabCoffre() == 0){
+					plongeur.descendre();
+					contenuFenetre.oxygene = contenuFenetre.oxygene -  1 - plongeur.retourNbCoffre();
+					interrupteur++;
+					if (interrupteur == 2){
+						aquiletour();
+						interrupteur = 0;
+					}
+				}
+				else{
+					plongeur.prendre(cave2.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).retourCoffre(0).retourNbTresor());
+					contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
+					cave2.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).suppCoffre(0);
+					interrupteur++;
+					if (interrupteur == 2){
+						aquiletour();
+						interrupteur = 0;
+					}
+				}
+			}
+
+			contenuFenetre.repaint();
+		}
+
+
+
 
 	}
 
@@ -158,12 +267,17 @@ public class Fenetre extends JFrame {
         for (int i = 0; i < 3 ; i++){
 
 
-			System.out.println("cave1 "+cave1.retourNbNiveau());
+			System.out.println("cave1 " + cave1.retourNbNiveau());
 			System.out.println("cave2 " + cave2.retourNbNiveau());
 			System.out.println("cave3 " + cave3.retourNbNiveau());
 
             while (contenuFenetre.oxygene > 0){
 
+				if(mode == 1){
+					if (order[interrupteur]==2){
+						tourBot(plongeur2);
+					}
+				}
 
             	if(plongeur1.retourPositionY()==0 && plongeur1.retourPoids() !=1){
 					plongeur1.setScore();
@@ -177,6 +291,7 @@ public class Fenetre extends JFrame {
 
 				contenuFenetre.dessinTour = order[interrupteur];
 				System.out.println(order[interrupteur]);
+
             }
 
 
@@ -203,10 +318,23 @@ public class Fenetre extends JFrame {
 			contenuFenetre.oxygene = 2*contenuFenetre.nbNiveau;
 			contenuFenetre.repaint();
         }
+		if(plongeur1.retourScore() > plongeur2.retourScore()){
+        	contenuFenetre.fenetreFin = 1;
+		}
+		else if (plongeur2.retourScore()> plongeur1.retourScore()){
+			contenuFenetre.fenetreFin = 2;
+		}
+		else{
+			contenuFenetre.fenetreFin = 0;
+		}
 
-		this.dispose();
-
+		try{
+			Thread.sleep(5000);
+		}catch(Exception e){
+		}
     }
+
+
 
     public void sonMouvement(){
 		try{
@@ -223,4 +351,5 @@ public class Fenetre extends JFrame {
     		AudioPlayer.player.start(au);
 		}catch(Exception e){}
 	}
+
 }
