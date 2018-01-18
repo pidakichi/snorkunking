@@ -119,7 +119,7 @@ public class Fenetre extends JFrame {
 				//ajout du poids du coffre
 				plongeur.prendre(cave1.retourNiveau(plongeur.retourPositionY() - 1).retourCoffre(0).retourNbTresor());
 
-				contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
+				contenuFenetre.oxygene = contenuFenetre.oxygene - 1;
 
 				//suppression du coffre
 				cave1.retourNiveau(plongeur.retourPositionY() - 1).suppCoffre(0);
@@ -131,7 +131,7 @@ public class Fenetre extends JFrame {
 				//ajout du poids du coffre
 				plongeur.prendre(cave3.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-cave2.retourNbNiveau()-1).retourCoffre(0).retourNbTresor());
 
-				contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
+				contenuFenetre.oxygene = contenuFenetre.oxygene - 1 ;
 
 				//suppression du coffre
 				cave3.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-cave2.retourNbNiveau()-1).suppCoffre(0);
@@ -141,7 +141,7 @@ public class Fenetre extends JFrame {
 				//ajout du poids du coffre
 				plongeur.prendre(cave2.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).retourCoffre(0).retourNbTresor());
 
-				contenuFenetre.oxygene = contenuFenetre.oxygene - 1 - plongeur.retourNbCoffre();
+				contenuFenetre.oxygene = contenuFenetre.oxygene - 1;
 
 				//suppression du coffre
 				cave2.retourNiveau(plongeur.retourPositionY()-cave1.retourNbNiveau()-1).suppCoffre(0);
